@@ -33,7 +33,7 @@ while (exit_btn != "1"):
         try:
             if op_type == "1":
                 with connection.cursor() as cursor:
-                    table_name = input("Выберите таблицу для просмотра (Электротовар, Заказ): ")
+                    table_name = input("Выберите таблицу для просмотра: ")
                     if table_name == 'Электротовар':
                         cursor.execute("SELECT i.Код_товара AS id_item, i.Наименование AS item_name, "
                                        "i.Тип_товара AS category_name, i.Стоимость AS item_price, "
