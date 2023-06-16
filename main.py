@@ -159,21 +159,24 @@ while (exit_btn != "1"):
                             cursor.execute(f"UPDATE {table_name} SET {set_string} WHERE {id_table} = {id_redacted}")
                             connection.commit()
                             print("Обновление данных завершено")
-                            print('-' * len(string2))
                     else:
                         choice_redact = input("Какой столбец требуется отредактировать? "
                                               "(введите название с учетом регистра): ")
                         choice_id = input("Введите ID записи, которую требуется отредактировать: ")
                         data = input("Введите новые данные: ")
-                        # если на входе подразумевается строка или дата, то
-                        try:
-                            if data.startswith('+') or data.__contains__('-') or (not any(chr.isdigit() for chr in data)):
-                                data = f"'{data}'"
-                        except:
-                            pass
-                        cursor.execute(f"UPDATE {table_name} SET {choice_redact} = {data} WHERE {id_table} = {choice_id}")
-                        connection.commit()
-                        print("Обновление данных завершено")
+                        print('-' * len(string2))
+                        choice_choice = input("Вы уверены, что хотите изменить эти данные? (Да > 1, Нет > 2) ")
+                        print('-' * len(string2))
+                        if choice_choice == '1':
+                            # если на входе подразумевается строка или дата, то
+                            try:
+                                if data.startswith('+') or data.__contains__('-') or (not any(chr.isdigit() for chr in data)):
+                                    data = f"'{data}'"
+                            except:
+                                pass
+                            cursor.execute(f"UPDATE {table_name} SET {choice_redact} = {data} WHERE {id_table} = {choice_id}")
+                            connection.commit()
+                            print("Обновление данных завершено")
                     exit_btn = input("Для выхода нажмите 1; Для выбора операции нажмите 2: ")
                     del choice_redact
             elif op_type == "4":
