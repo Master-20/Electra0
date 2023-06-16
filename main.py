@@ -193,7 +193,6 @@ while (exit_btn != "1"):
                     if del_approve == "1":
                         if table_name == 'Сотрудник':
                             cursor.execute(f"DELETE FROM Сотрудник WHERE №_сотрудника = {record_id};")
-                            cursor.execute(f"DELETE FROM Касса WHERE №_сотрудника = {record_id};")
                             #DONE
                         elif table_name == 'Касса':
                             cursor.execute(f"DELETE FROM Касса WHERE №_кассы = {record_id};")
