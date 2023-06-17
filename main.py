@@ -200,39 +200,46 @@ while (exit_btn != "1"):
                     print('-' * len(string2))
                     if del_approve == "1":
                         if table_name == 'Сотрудник':
+                            cursor.execute(f"UPDATE Покупатель SET №_сотрудника = NULL WHERE №_сотрудника = {record_id};")
+                            cursor.execute(f"UPDATE Касса SET №_сотрудника = NULL WHERE №_сотрудника = {record_id};")
                             cursor.execute(f"DELETE FROM Сотрудник WHERE №_сотрудника = {record_id};")
-                            #DONE
+                            # DONE
                         elif table_name == 'Касса':
-                            cursor.execute(f"DELETE FROM Касса WHERE №_кассы = {record_id};")
-                            #DONE
+                            cursor.execute(f"UPDATE Покупатель SET №_смены = NULL WHERE №_смены = {record_id};")
+                            cursor.execute(f"DELETE FROM Касса WHERE №_смены = {record_id};")
+                            # DONE
                         elif table_name == 'Покупатель':
                             cursor.execute(f"DELETE FROM Покупатель_Электротовар WHERE №_покупки = {record_id};")
                             cursor.execute(f"DELETE FROM Покупатель WHERE №_покупки = {record_id};")
-                            #DONE
+                            # DONE
                         elif table_name == 'Служба_доставки':
+                            cursor.execute(f"UPDATE Заказ SET №_курьера = NULL WHERE №_курьера = {record_id};")
                             cursor.execute(f"DELETE FROM Служба_доставки WHERE №_курьера = {record_id};")
-                            #DONE
+                            # DONE
                         elif table_name == 'Заказ':
                             cursor.execute(f"DELETE FROM Заказ_Электротовар WHERE №_заказа = {record_id};")
                             cursor.execute(f"DELETE FROM Заказ WHERE №_заказа = {record_id};")
-                            #DONE
+                            # DONE
                         elif table_name == 'Стенд_проверки':
+                            cursor.execute(f"UPDATE Электротовар SET Тип_цоколя_разъема = NULL WHERE Тип_цоколя_разъема = {record_id};")
                             cursor.execute(f"DELETE FROM Стенд_проверки WHERE Тип_цоколя_разъема = {record_id};")
-                            #DONE
+                            # DONE
                         elif table_name == 'Склад':
+                            cursor.execute(f"UPDATE Электротовар SET №_стеллажа_полки = NULL WHERE №_стеллажа_полки = {record_id};")
                             cursor.execute(f"DELETE FROM Склад WHERE №_стеллажа_полки = {record_id};")
-                            #DONE
+                            # DONE
                         elif table_name == 'Электротовар':
                             cursor.execute(f"DELETE FROM Заказ_Электротовар WHERE Код_товара = {record_id};")
                             cursor.execute(f"DELETE FROM Покупатель_Электротовар WHERE Код_товара = {record_id};")
                             cursor.execute(f"DELETE FROM Поставщик_Электротовар WHERE Код_товара = {record_id};")
                             cursor.execute(f"DELETE FROM Электротовар WHERE Код_товара = {record_id};")
-                            #DONE
+                            # DONE
                         elif table_name == 'Поставщик':
                             cursor.execute(f"DELETE FROM Поставщик_Электротовар WHERE Код_поставщика = {record_id};")
                             cursor.execute(f"DELETE FROM Поставщик WHERE Код_поставщика = {record_id};")
-                            #DONE
+                            # DONE
                         elif table_name == 'Должность':
+                            cursor.execute(f"UPDATE Сотрудник SET Название_должности = NULL WHERE Название_должности = {record_id};")
                             cursor.execute(f"DELETE FROM Должность WHERE Название_должности = {record_id};")
                             #DONE
                         connection.commit()
