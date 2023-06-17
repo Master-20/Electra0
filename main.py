@@ -104,7 +104,14 @@ while (exit_btn != "1"):
                                    f"WHERE table_name = '{table_name}'")
                     table_data = prettytable.from_db_cursor(cursor)
                     # удаляем ряд, в котором содержится id (PK таблицы)
-                    table_data.del_row(0)
+                    if table_name == 'Заказ' or table_name == 'Сотрудник':
+                        table_data.del_row(2)
+                    elif table_name == 'Должность':
+                        table_data.del_row(1)
+                    elif table_name == 'Покупатель':
+                        table_data.del_row(3)
+                    else:
+                        table_data.del_row(0)
                     print("Колонки вашей таблицы и их типы данных:")
                     print(table_data)
                     if table_name == 'Должность': id_table = 'Название_должности'
@@ -132,7 +139,6 @@ while (exit_btn != "1"):
                                     data[i] = int(data[i])
                             except:
                                 pass
-
                         # преобразование к кортежу и комит в БД
                         data_final = tuple(data)
                         id_redacted = int(input("Введите ID записи, которую требуется изменить: "))
@@ -155,7 +161,6 @@ while (exit_btn != "1"):
                                         set_string += f"{table_data.rows[i][0]} = {data_final[i]} "
                                     else:
                                         set_string += f"{table_data.rows[i][0]} = '{data_final[i]}' "
-
                             cursor.execute(f"UPDATE {table_name} SET {set_string} WHERE {id_table} = {id_redacted}")
                             connection.commit()
                             print("Обновление данных завершено")
@@ -201,15 +206,15 @@ while (exit_btn != "1"):
                             cursor.execute(f"DELETE FROM Касса WHERE №_кассы = {record_id};")
                             #DONE
                         elif table_name == 'Покупатель':
-                            cursor.execute(f"DELETE FROM Покупатель WHERE №_покупки = {record_id};")
                             cursor.execute(f"DELETE FROM Покупатель_Электротовар WHERE №_покупки = {record_id};")
+                            cursor.execute(f"DELETE FROM Покупатель WHERE №_покупки = {record_id};")
                             #DONE
                         elif table_name == 'Служба_доставки':
                             cursor.execute(f"DELETE FROM Служба_доставки WHERE №_курьера = {record_id};")
                             #DONE
                         elif table_name == 'Заказ':
-                            cursor.execute(f"DELETE FROM Заказ WHERE №_заказа = {record_id};")
                             cursor.execute(f"DELETE FROM Заказ_Электротовар WHERE №_заказа = {record_id};")
+                            cursor.execute(f"DELETE FROM Заказ WHERE №_заказа = {record_id};")
                             #DONE
                         elif table_name == 'Стенд_проверки':
                             cursor.execute(f"DELETE FROM Стенд_проверки WHERE Тип_цоколя_разъема = {record_id};")
@@ -218,14 +223,14 @@ while (exit_btn != "1"):
                             cursor.execute(f"DELETE FROM Склад WHERE №_стеллажа_полки = {record_id};")
                             #DONE
                         elif table_name == 'Электротовар':
-                            cursor.execute(f"DELETE FROM Электротовар WHERE Код_товара = {record_id};")
                             cursor.execute(f"DELETE FROM Заказ_Электротовар WHERE Код_товара = {record_id};")
                             cursor.execute(f"DELETE FROM Покупатель_Электротовар WHERE Код_товара = {record_id};")
                             cursor.execute(f"DELETE FROM Поставщик_Электротовар WHERE Код_товара = {record_id};")
+                            cursor.execute(f"DELETE FROM Электротовар WHERE Код_товара = {record_id};")
                             #DONE
                         elif table_name == 'Поставщик':
-                            cursor.execute(f"DELETE FROM Поставщик WHERE Код_поставщика = {record_id};")
                             cursor.execute(f"DELETE FROM Поставщик_Электротовар WHERE Код_поставщика = {record_id};")
+                            cursor.execute(f"DELETE FROM Поставщик WHERE Код_поставщика = {record_id};")
                             #DONE
                         elif table_name == 'Должность':
                             cursor.execute(f"DELETE FROM Должность WHERE Название_должности = {record_id};")
